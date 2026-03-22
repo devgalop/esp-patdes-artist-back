@@ -1,5 +1,13 @@
 # Repositorio Backend | Reto: Gestión de eventos culturales
 
+## Tabla de contenidos
+
+- [Descripción del reto](#descripción-del-reto)
+- [Estilo de arquitectura](#estilo-de-arquitectura)
+- [Justificación de la elección de la arquitectura](#justificación-de-la-elección-de-la-arquitectura)
+- [Tecnologías utilizadas](#tecnologías-utilizadas)
+- [Diagrama de contexto](#diagrama-de-contexto)
+
 ## Descripción del reto
 
 En Medellín, muchos artistas independientes enfrentan dificultades para organizar presentaciones, ya que deben coordinar múltiples actores (sonido, transporte, equipos, personal), en procesos informales y fragmentados que limitan su circulación.
@@ -31,3 +39,7 @@ Se aplicará la arquitectura de capas verticales (Vertical Slice Architecture), 
 - **PostgreSQL**
 - **Docker**
 - **OpenAPI**
+
+## Diagrama de contexto
+
+![Diagrama de contexto](./docs/diagrams/diag_context.drawio.png)
