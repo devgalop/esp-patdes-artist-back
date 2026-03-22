@@ -44,7 +44,7 @@ Se aplicará la arquitectura de capas verticales (Vertical Slice Architecture), 
 ## Estructura del proyecto
 
 - **src/**: Código fuente de la aplicación.
-  - **Api/**: Controladores y endpoints de la API.
+  - **Api/**: Inicio de la aplicación.
   - **Modules/**: Módulos organizados por funcionalidad (artistas, eventos, recursos, etc.).
   - **Shared/**: Código compartido entre módulos (modelos, servicios comunes, etc.).
   - **Tests/**: Pruebas unitarias e integrales.
@@ -71,8 +71,6 @@ src/
 │   │   │
 │   │   └── Domain/
 │   │       ├── Event.cs
-│   │       ├── EventId.cs
-│   │       └── EventCreated.cs
 │   │
 │   ├── VenueManagement/
 │   │   ├── CreateVenue/
@@ -96,7 +94,7 @@ src/
 │   │   └── Domain/
 │
 ├── Shared/
-│   ├── Kernel/
+│   ├── Domain/
 │   │   ├── BaseEntity.cs
 │   │   ├── DomainEvent.cs
 │   │   └── Result.cs
