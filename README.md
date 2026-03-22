@@ -6,6 +6,7 @@
 - [Estilo de arquitectura](#estilo-de-arquitectura)
 - [Justificación de la elección de la arquitectura](#justificación-de-la-elección-de-la-arquitectura)
 - [Tecnologías utilizadas](#tecnologías-utilizadas)
+- [Estructura del proyecto](#estructura-del-proyecto)
 - [Diagrama de contexto](#diagrama-de-contexto)
 
 ## Descripción del reto
@@ -39,6 +40,83 @@ Se aplicará la arquitectura de capas verticales (Vertical Slice Architecture), 
 - **PostgreSQL**
 - **Docker**
 - **OpenAPI**
+
+## Estructura del proyecto
+
+- **src/**: Código fuente de la aplicación.
+  - **Api/**: Controladores y endpoints de la API.
+  - **Modules/**: Módulos organizados por funcionalidad (artistas, eventos, recursos, etc.).
+  - **Shared/**: Código compartido entre módulos (modelos, servicios comunes, etc.).
+  - **Tests/**: Pruebas unitarias e integrales.
+- **docs/**: Documentación del proyecto, incluyendo diagramas y especificaciones.
+
+```bash
+src/
+│
+├── Api/
+│   └── Program.cs
+│
+├── Modules/
+│   ├── EventManagement/
+│   │   ├── CreateEvent/
+│   │   │   ├── CreateEventCommand.cs
+│   │   │   ├── CreateEventHandler.cs
+│   │   │   ├── CreateEventEndpoint.cs
+│   │   │   ├── CreateEventValidator.cs
+│   │   │   └── CreateEventMapping.cs
+│   │   │
+│   │   ├── GetEvent/
+│   │   ├── CancelEvent/
+│   │   ├── PublishEvent/
+│   │   │
+│   │   └── Domain/
+│   │       ├── Event.cs
+│   │       ├── EventId.cs
+│   │       └── EventCreated.cs
+│   │
+│   ├── VenueManagement/
+│   │   ├── CreateVenue/
+│   │   ├── ReserveVenue/
+│   │   └── Domain/
+│   │
+│   ├── ServiceMarketplace/
+│   │   ├── CreateService/
+│   │   ├── ListServices/
+│   │   └── Domain/
+│   │
+│   ├── OrderManagement/
+│   │   ├── CreateOrder/
+│   │   ├── ApproveOrder/
+│   │   ├── CancelOrder/
+│   │   └── Domain/
+│   │
+│   ├── Ticketing/
+│   │   ├── CreateTicket/
+│   │   ├── PurchaseTicket/
+│   │   └── Domain/
+│
+├── Shared/
+│   ├── Kernel/
+│   │   ├── BaseEntity.cs
+│   │   ├── DomainEvent.cs
+│   │   └── Result.cs
+│   │
+│   ├── Infrastructure/
+│   │   ├── Database/
+│   │   └── Messaging/
+│   │
+│   └── Abstractions/
+│       ├── ICommand.cs
+│       ├── IQuery.cs
+│       └── IEvent.cs
+│
+└── Tests/
+    ├── EventManagementTests/
+    ├── VenueManagementTests/
+    ├── ServiceMarketplaceTests/
+    ├── OrderManagementTests/
+    └── TicketingTests/
+```
 
 ## Diagrama de contexto
 
