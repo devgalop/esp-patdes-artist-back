@@ -25,7 +25,7 @@ namespace culturalEvents.Shared.Domain
         PAID
     }
 
-    public sealed class Event
+    public sealed class CulturalEvent
     {
         public Guid Id { get; private set; }
         public string Name { get; set; }
@@ -41,8 +41,9 @@ namespace culturalEvents.Shared.Domain
         public User? Artist { get; set; }
 
         public ICollection<Order> Orders { get; set; }
+        public ICollection<Ticket> Tickets { get; set; }
 
-        public Event()
+        public CulturalEvent()
         {
             Id = Guid.CreateVersion7();
             Name = string.Empty;
@@ -54,9 +55,10 @@ namespace culturalEvents.Shared.Domain
             ArtistId = null;
             Artist = null;
             Orders = new List<Order>();
+            Tickets = new List<Ticket>();
         }
 
-        public Event(string name, DateTime eventDate, Venue venue, User artist)
+        public CulturalEvent(string name, DateTime eventDate, Venue venue, User artist)
         {
             Id = Guid.CreateVersion7();
             Name = name;
@@ -69,6 +71,7 @@ namespace culturalEvents.Shared.Domain
             ArtistId = artist.Id;
             Artist = artist;
             Orders = new List<Order>();
+            Tickets = new List<Ticket>();
         }
 
         public void UpdateCategory(EventCategory category)

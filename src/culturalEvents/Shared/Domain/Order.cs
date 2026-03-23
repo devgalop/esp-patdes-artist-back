@@ -7,7 +7,13 @@ namespace culturalEvents.Shared.Domain
         public decimal Total => Items.Sum(item => item.Total);
 
         public Guid? ArtistId { get; set; }
+        public User? Artist { get; set; }
+
         public Guid? ProviderId { get; set; }
+        public User? Provider { get; set; }
+
+        public Guid? EventId { get; set; }
+        public CulturalEvent? Event { get; set; }
 
         public List<OrderItem> Items { get; set; }
 
@@ -18,15 +24,21 @@ namespace culturalEvents.Shared.Domain
             Items = new List<OrderItem>();
             ArtistId = null;
             ProviderId = null;
+            Artist = null;
+            Provider = null;
+            EventId = null;
+            Event = null;
         }
 
-        public Order(User artist, User provider)
+        public Order(User artist, User provider, CulturalEvent culturalEvent)
         {
             Id = Guid.CreateVersion7();
             UtcCreatedAt = DateTime.UtcNow;
             Items = new List<OrderItem>();
             ArtistId = artist.Id;
+            Artist = artist;
             ProviderId = provider.Id;
+            Provider = provider;
         }
 
         public void AddItem(OrderItem item)

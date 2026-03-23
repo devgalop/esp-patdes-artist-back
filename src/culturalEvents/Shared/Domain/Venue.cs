@@ -16,6 +16,9 @@ namespace culturalEvents.Shared.Domain
         public VenueStatus Status { get; set; }
         public decimal RentalPrice { get; set; }
 
+        public ICollection<CulturalEvent> Events { get; set; }
+        public ICollection<TicketSeat> Seats { get; set; }
+
         public Venue()
         {
             Id = Guid.CreateVersion7();
@@ -24,6 +27,8 @@ namespace culturalEvents.Shared.Domain
             Capacity = 0;
             Status = VenueStatus.AVAILABLE;
             RentalPrice = 0;
+            Events = new List<CulturalEvent>();
+            Seats = new List<TicketSeat>();
         }
 
         public Venue(string name, string address, int capacity, decimal rentalPrice)
@@ -34,6 +39,8 @@ namespace culturalEvents.Shared.Domain
             Capacity = capacity;
             RentalPrice = rentalPrice;
             Status = VenueStatus.AVAILABLE;
+            Events = new List<CulturalEvent>();
+            Seats = new List<TicketSeat>();
         }
 
         public void UpdateStatus(VenueStatus status)

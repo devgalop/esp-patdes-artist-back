@@ -5,7 +5,7 @@ namespace culturalEvents.Shared.Domain
         public Guid Id { get; private set; }
         public DateTime UtcReservationDate { get; set; }
         public Guid? EventId { get; set; }
-        public Event? Event { get; set; }
+        public CulturalEvent? Event { get; set; }
 
         public Guid? TicketSeatId { get; set; }
         public TicketSeat? TicketSeat { get; set; }
@@ -15,12 +15,12 @@ namespace culturalEvents.Shared.Domain
             Id = Guid.CreateVersion7();
             EventId = null;
             Event = null;
-            TicketSeatId = null;
             TicketSeat = null;
+            TicketSeatId = null;
             UtcReservationDate = DateTime.UtcNow;
         }
 
-        public Ticket(Event evnt, TicketSeat ticketSeat)
+        public Ticket(CulturalEvent evnt, TicketSeat ticketSeat)
         {
             Id = Guid.CreateVersion7();
             Event = evnt;

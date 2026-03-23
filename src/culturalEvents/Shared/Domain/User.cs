@@ -12,12 +12,15 @@ namespace culturalEvents.Shared.Domain
         public string Email { get; private set; }
         public string PasswordHash { get; private set; }
 
+        public ICollection<Role> Roles { get; set; }
+
         public User()
         {
             Id = Guid.CreateVersion7();
             Name = string.Empty;
             Email = string.Empty;
             PasswordHash = string.Empty;
+            Roles = new List<Role>();
         }
 
         public User(string name, string email, string passwordHash)
@@ -26,6 +29,12 @@ namespace culturalEvents.Shared.Domain
             Name = name;
             Email = email;
             PasswordHash = passwordHash;
+            Roles = new List<Role>();
+        }
+
+        public void AddRole(Role role)
+        {
+            Roles.Add(role);
         }
     }
 }
