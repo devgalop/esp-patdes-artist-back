@@ -39,6 +39,7 @@ Se aplicará la arquitectura de capas verticales (Vertical Slice Architecture), 
 - **Entity Framework**
 - **PostgreSQL**
 - **Docker**
+- **RabbitMQ**
 - **OpenAPI**
 
 ## Estructura del proyecto
@@ -92,11 +93,16 @@ src/
 │   │   ├── CreateTicket/
 │   │   ├── PurchaseTicket/
 │   │   └── Domain/
+│   │
+│   ├── UserManagement/
+│   │   ├── UpdateAccount/
+│   │   ├── Login/
+│   │   ├── RecoveryPassword/
+│   │   ├── Signup/
+│   │   └── Domain/
 │
 ├── Shared/
 │   ├── Domain/
-│   │   ├── BaseEntity.cs
-│   │   ├── DomainEvent.cs
 │   │   └── Result.cs
 │   │
 │   ├── Infrastructure/
@@ -113,7 +119,8 @@ src/
     ├── VenueManagementTests/
     ├── ServiceMarketplaceTests/
     ├── OrderManagementTests/
-    └── TicketingTests/
+    ├── TicketingTests/
+    └── UserManagementTests/
 ```
 
 ## Diagrama de contexto
