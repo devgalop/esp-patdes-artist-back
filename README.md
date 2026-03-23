@@ -126,3 +126,7 @@ src/
 ## Diagrama de contexto
 
 ![Diagrama de contexto](./docs/diagrams/diag_context.drawio.png)
+
+## Guía de configuración
+
+En el archivo [SETUP.md](./docs/SETUP.md) se encuentra la guía de configuración para el proyecto, incluyendo la instalación de las herramientas necesarias y la configuración de la base de datos PostgreSQL utilizando Docker.
