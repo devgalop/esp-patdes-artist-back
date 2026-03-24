@@ -18,12 +18,12 @@ namespace culturalEvents.Shared.Infrastructure.Database
         public DbSet<Order> Orders {get; set;}
         public DbSet<OrderItem> OrderItems {get; set;}
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(modelBuilder);
 
-            builder.ConfigureUserRelationships()
-                   .ConfigureEventRelationships();
+            modelBuilder.ConfigureUserRelationships()
+                        .ConfigureEventRelationships();
         }
     }
 }

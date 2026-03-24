@@ -4,7 +4,6 @@ namespace culturalEvents.Shared.Domain
     {
         public Guid Id { get; set; }
         public int Quantity { get; set; }
-        public decimal Total => Quantity * (Offering?.Price ?? 0);
 
         public Guid? OrderId { get; set; }
 
@@ -37,6 +36,16 @@ namespace culturalEvents.Shared.Domain
         public void IncrementQuantity(int quantity)
         {
             Quantity += quantity;
+        }
+
+        public decimal GetTotal()
+        {
+            if (Offering == null)
+            {
+                return 0;
+            }
+
+            return Offering.Price * Quantity;
         }
 
     }

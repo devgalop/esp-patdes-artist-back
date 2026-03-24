@@ -4,7 +4,6 @@ namespace culturalEvents.Shared.Domain
     {
         public Guid Id { get; set; }
         public DateTime UtcCreatedAt { get; private set; }
-        public decimal Total => Items.Sum(item => item.Total);
 
         public Guid? ArtistId { get; set; }
         public User? Artist { get; set; }
@@ -49,6 +48,11 @@ namespace culturalEvents.Shared.Domain
         public void AddItems(IEnumerable<OrderItem> items)
         {
             Items.AddRange(items);
+        }
+
+        public decimal GetTotal()
+        {
+            return Items.Sum(item => item.GetTotal());
         }
     }
 }

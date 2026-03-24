@@ -181,9 +181,6 @@ namespace culturalEvents.Shared.Infrastructure.Database
             {
                 entity.Property(o => o.UtcCreatedAt)
                     .IsRequired();
-                entity.Property(o => o.Total)
-                    .IsRequired()
-                    .HasDefaultValue(0);
                 
                 entity.HasKey(o => o.Id);
 
@@ -209,9 +206,6 @@ namespace culturalEvents.Shared.Infrastructure.Database
             builder.Entity<OrderItem>(entity =>
             {
                 entity.Property(i => i.Quantity)
-                    .IsRequired()
-                    .HasDefaultValue(0);
-                entity.Property(i => i.Total)
                     .IsRequired()
                     .HasDefaultValue(0);
                     
