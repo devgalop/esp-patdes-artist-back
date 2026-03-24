@@ -9,6 +9,11 @@ namespace culturalEvents.Shared.Infrastructure.Database
 {
     public static class BuilderExtensions
     {
+        /// <summary>
+        /// Configures the relationships and constraints for the User, Role, and Permission entities in the database model. This method sets up the properties, keys, indexes, and many-to-many relationships between these entities to ensure data integrity and efficient querying.
+        /// </summary>
+        /// <param name="builder">The model builder used to configure the entity relationships.</param>
+        /// <returns>The model builder with the configured relationships.</returns>
         public static ModelBuilder ConfigureUserRelationships(this ModelBuilder builder)
         {
             builder.Entity<User>(user =>
@@ -65,6 +70,11 @@ namespace culturalEvents.Shared.Infrastructure.Database
             return builder;
         }
 
+        /// <summary>
+        /// Configures the relationships and constraints for the Venue, TicketSeat, CulturalEvent, Ticket, Offering, Order, and OrderItem entities in the database model. This method sets up the properties, keys, indexes, and relationships between these entities to ensure data integrity and efficient querying for the cultural events application.
+        /// </summary>
+        /// <param name="builder">The model builder used to configure the entity relationships.</param>
+        /// <returns>The model builder with the configured relationships.</returns>
         public static ModelBuilder ConfigureEventRelationships(this ModelBuilder builder)
         {
             builder.Entity<Venue>(entity =>

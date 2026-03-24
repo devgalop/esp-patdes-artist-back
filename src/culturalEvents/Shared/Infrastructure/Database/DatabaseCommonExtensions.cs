@@ -1,3 +1,4 @@
+using culturalEvents.Shared.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace culturalEvents.Shared.Infrastructure.Database
@@ -5,10 +6,10 @@ namespace culturalEvents.Shared.Infrastructure.Database
     public static class DatabaseCommonExtensions
     {
         /// <summary>
-        /// Agrega el contexto de la base de datos a los servicios de la aplicación, configurando la conexión a PostgreSQL y utilizando la convención de nomenclatura snake_case.
+        /// Adds the AppDatabaseContext to the service collection and configures it to use PostgreSQL with the connection string from the configuration. This method also applies snake case naming convention for the database tables and columns.
         /// </summary>
-        /// <param name="builder">Constructor de la aplicación web</param>
-        /// <returns>Constructor de la aplicación web con el contexto de la base de datos agregado</returns>
+        /// <param name="builder">The web application builder used to configure services.</param>
+        /// <returns>The web application builder with the database context added.</returns>
         public static WebApplicationBuilder AddDatabaseContext(this WebApplicationBuilder builder)
         {
             builder.Services.AddDbContext<AppDatabaseContext>(options =>
@@ -22,10 +23,10 @@ namespace culturalEvents.Shared.Infrastructure.Database
         }
 
         /// <summary>
-        /// Verifica la conexión a la base de datos y registra el resultado en los logs.
+        /// Verifies the database connection and logs the result.
         /// </summary>
-        /// <param name="app">Aplicación web</param>
-        /// <returns>Tarea asincrónica que representa la operación de verificación de la conexión a la base de datos</returns>
+        /// <param name="app">The web application.</param>
+        /// <returns>A task that represents the asynchronous operation of verifying the database connection.</returns>
         public static async Task EnsureDatabaseCanConnectAsync(this WebApplication app)
         {
             await using var scope = app.Services.CreateAsyncScope();
@@ -35,10 +36,10 @@ namespace culturalEvents.Shared.Infrastructure.Database
         }
 
         /// <summary>
-        /// Aplica las migraciones pendientes a la base de datos.
+        /// Applies any pending migrations to the database.
         /// </summary>
-        /// <param name="app">Aplicación web</param>
-        /// <returns>Tarea asincrónica que representa la operación de aplicación de migraciones</returns>
+        /// <param name="app">The web application.</param>
+        /// <returns>A task that represents the asynchronous operation of applying migrations.</returns>
         public static async Task ApplyMigrationsAsync(this WebApplication app)
         {
             using IServiceScope scope = app.Services.CreateScope();
@@ -48,20 +49,20 @@ namespace culturalEvents.Shared.Infrastructure.Database
             try
             {
                 await appContext.Database.MigrateAsync();
-                app.Logger.LogInformation("Se aplicaron las migraciones de la base de datos correctamente.");
+                app.Logger.LogInformation("Applied database migrations successfully.");
             }
             catch (Exception e)
             {
-                app.Logger.LogError(e, "Ocurrió un error al aplicar las migraciones de la base de datos.");
+                app.Logger.LogError(e, "An error occurred while applying database migrations.");
             }
         }
 
         /// <summary>
-        /// Reinicia la base de datos eliminándola y aplicando las migraciones.
-        /// Solo para uso en desarrollo o pruebas.
+        /// Resets the database by deleting it and applying migrations.
+        /// This is intended for use in development or testing environments only.
         /// </summary>
-        /// <param name="app">Aplicación web</param>
-        /// <returns>Tarea asincrónica que representa la operación de reinicio de la base de datos</returns>
+        /// <param name="app">The web application.</param>
+        /// <returns>A task that represents the asynchronous operation of resetting the database.</returns>
         public static async Task ResetDatabaseAsync(this WebApplication app)
         {
             using IServiceScope scope = app.Services.CreateScope();
@@ -72,11 +73,67 @@ namespace culturalEvents.Shared.Infrastructure.Database
             {
                 await appContext.Database.EnsureDeletedAsync();
                 await appContext.Database.MigrateAsync();
-                app.Logger.LogInformation("Se reinició la base de datos correctamente.");
+                app.Logger.LogInformation("Database reset successfully.");
             }
             catch (Exception e)
             {
-                app.Logger.LogError(e, "Ocurrió un error al reiniciar la base de datos.");
+                app.Logger.LogError(e, "An error occurred while resetting the database.");
+            }
+        }
+
+        /// <summary>
+        /// Seeds the database with initial data.
+        /// </summary>
+        /// <param name="app">The web application.</param>
+        /// <returns>A task that represents the asynchronous operation of seeding the database.</returns>
+        public static async Task SeedDatabaseAsync(this WebApplication app)
+        {
+            using IServiceScope scope = app.Services.CreateScope();
+            await using AppDatabaseContext appContext =
+                scope.ServiceProvider.GetRequiredService<AppDatabaseContext>();
+            using var transaction = await appContext.Database.BeginTransactionAsync();
+            try
+            {
+                if (await appContext.Roles.AnyAsync() || await appContext.Permissions.AnyAsync())
+                {
+                    app.Logger.LogInformation("The database already contains data. Initial seeding will not be performed.");
+                    await transaction.RollbackAsync();
+                    return;
+                }
+                
+                //Create initial permissions
+                Permission createEventPermission = new Permission("CreateEvent", "Permission to create events");
+                await appContext.Permissions.AddAsync(createEventPermission);
+                Permission createOfferingPermission = new Permission("CreateOffering", "Permission to create offerings");
+                await appContext.Permissions.AddAsync(createOfferingPermission);
+                Permission createVenuePermission = new Permission("CreateVenue", "Permission to create venues");
+                await appContext.Permissions.AddAsync(createVenuePermission);
+
+                //Create initial roles
+                Role adminRole = new Role("Admin", "Administrator role with all permissions");
+                adminRole.AddPermission(createEventPermission);
+                adminRole.AddPermission(createOfferingPermission);
+                adminRole.AddPermission(createVenuePermission);
+                await appContext.Roles.AddAsync(adminRole);
+
+                Role providerRole = new Role("Provider", "Provider role with permissions to create offerings and venues");
+                providerRole.AddPermission(createOfferingPermission);
+                providerRole.AddPermission(createVenuePermission);
+                await appContext.Roles.AddAsync(providerRole);
+
+                Role artistRole = new Role("Artist", "Artist role with permission to create events");
+                artistRole.AddPermission(createEventPermission);
+                await appContext.Roles.AddAsync(artistRole);
+
+                await appContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                app.Logger.LogInformation("Database seeded successfully with initial roles and permissions.");
+            }
+            catch (Exception e)
+            {
+                await transaction.RollbackAsync();
+                app.Logger.LogError(e, "An error occurred while seeding the initial data in the database.");
             }
         }
     }
