@@ -1,4 +1,6 @@
+using culturalEvents.Modules.UserManagement.Common;
 using culturalEvents.Shared.Domain;
+using culturalEvents.Shared.Infrastructure.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace culturalEvents.Shared.Infrastructure.Database
@@ -18,6 +20,8 @@ namespace culturalEvents.Shared.Infrastructure.Database
                 options.UseNpgsql(connectionString)
                         .UseSnakeCaseNamingConvention(); 
             });
+
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             return builder;
         }

@@ -1,3 +1,4 @@
+using culturalEvents.Modules.UserManagement.Common;
 using culturalEvents.Shared.Abstractions;
 using culturalEvents.Shared.Infrastructure.Database;
 
@@ -6,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 builder.AddDatabaseContext()
-       .AddEndpoints();
+       .AddEndpoints()
+       .RegisterUserManagementFeatures();
 
 var app = builder.Build();
 
