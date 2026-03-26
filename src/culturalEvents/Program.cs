@@ -21,6 +21,7 @@ if (app.Environment.IsDevelopment())
     await app.SeedDatabaseAsync();
 }
 
+app.UseExceptionHandler();
 app.UseHttpsRedirection();
 app.MapEndpoints();
 
