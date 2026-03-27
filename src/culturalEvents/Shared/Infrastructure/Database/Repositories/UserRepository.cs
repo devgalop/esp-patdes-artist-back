@@ -25,13 +25,13 @@ namespace culturalEvents.Shared.Infrastructure.Database.Repositories
         public async Task<User?> GetUserByEmail(string email)
         {
             return await dbContext.Users.Include(u => u.Roles)
-            .FirstOrDefaultAsync(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+            .FirstOrDefaultAsync(u => u.Email.Equals(email));
         }
 
         public async Task<User?> GetUserById(string id)
         {
             return await dbContext.Users.Include(u => u.Roles)
-            .FirstOrDefaultAsync(u => u.Id.ToString().Equals(id, StringComparison.OrdinalIgnoreCase));
+            .FirstOrDefaultAsync(u => u.Id.ToString().Equals(id));
         }
 
         public async Task UpdateUser(User user)

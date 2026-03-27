@@ -24,4 +24,33 @@ namespace culturalEvents.Shared.Abstractions
         /// <returns>The result of the query.</returns>
         Task<TResult> SendAsync<TQuery, TResult>(TQuery query) where TQuery : IQuery;
     }
+
+    public class Mediator(IServiceProvider serviceProvider) : IMediator
+    {
+        public async Task<TResult> SendAsync<TQuery, TResult>(TQuery query) where TQuery : IQuery
+        {
+            var handler = serviceProvider.GetRequiredService<IQueryHandler<TQuery, TResult>>();
+            return await handler.HandleAsync(query);
+        }
+
+        public async Task SendAsync<TCommand>(TCommand command) where TCommand : ICommand
+        {
+            var handler = serviceProvider.GetRequiredService<ICommandHandler<TCommand>>();
+            await handler.HandleAsync(command);
+        }
+    }
+
+    public static class MediatorExtensions
+    {
+        /// <summary>
+        /// Registra el mediador en los servicios de la aplicación.
+        /// </summary>
+        /// <param name="builder">builder de aplicación</param>
+        /// <returns></returns>
+        public static WebApplicationBuilder AddMediator(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddScoped<IMediator, Mediator>();
+            return builder;
+        }
+    }
 }

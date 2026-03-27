@@ -14,6 +14,7 @@ builder.Services.AddOpenApi();
 
 builder.AddDatabaseContext()
        .AddEndpoints()
+       .AddMediator()
        .RegisterUserManagementFeatures()
        .AddExceptionHandler();
 
