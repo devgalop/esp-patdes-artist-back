@@ -110,6 +110,8 @@ ConnectionStrings__Postgresql="Host=localhost;Port=5432;Database=myowndatabase;U
 POSTGRES_USER="myuser"
 POSTGRES_PASSWORD="mysecretpassword"
 POSTGRES_DB="myowndatabase"
+ADMIN_USER_NAME="example@domain.com"
+ADMIN_USER_PASSWORD="MySecretPassword!*"
 ```
 
 Para configurar las variables de entorno para entorno de desarrollo puede hacerlo de la siguiente manera:
@@ -125,7 +127,9 @@ Para configurar las variables de entorno para entorno de desarrollo puede hacerl
         "ConnectionStrings__Postgresql": "Host=localhost;Port=5432;Database=myowndatabase;Username=myuser;Password=mysecretpassword",
         "POSTGRES_USER": "myuser",
         "POSTGRES_PASSWORD": "mysecretpassword",
-        "POSTGRES_DB": "myowndatabase"
+        "POSTGRES_DB": "myowndatabase",
+        "ADMIN_USER_NAME": "example@domain.com",
+        "ADMIN_USER_PASSWORD": "MySecretPassword!*"
       }
     }
   }
