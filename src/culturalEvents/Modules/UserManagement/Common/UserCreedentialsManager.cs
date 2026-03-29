@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using culturalEvents.Shared.Abstractions;
-using culturalEvents.Shared.Domain;
 using Microsoft.AspNetCore.Identity;
 
 namespace culturalEvents.Modules.UserManagement.Common

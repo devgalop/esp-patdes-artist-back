@@ -1,4 +1,5 @@
 using culturalEvents.Modules.UserManagement.Common;
+using culturalEvents.Shared.Abstractions;
 using culturalEvents.Shared.Domain;
 using culturalEvents.Shared.Infrastructure.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,8 @@ namespace culturalEvents.Shared.Infrastructure.Database
                         .UseSnakeCaseNamingConvention(); 
             });
 
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>()
+                            .AddScoped<IRoleRepository, RoleRepository>();
 
             return builder;
         }
@@ -112,22 +114,44 @@ namespace culturalEvents.Shared.Infrastructure.Database
                 await appContext.Permissions.AddAsync(createOfferingPermission);
                 Permission createVenuePermission = new Permission("CreateVenue", "Permission to create venues");
                 await appContext.Permissions.AddAsync(createVenuePermission);
+                Permission listEventsPermission = new Permission("ListEvents", "Permission to list events");
+                await appContext.Permissions.AddAsync(listEventsPermission);
 
                 //Create initial roles
                 Role adminRole = new Role("Admin", "Administrator role with all permissions");
                 adminRole.AddPermission(createEventPermission);
                 adminRole.AddPermission(createOfferingPermission);
                 adminRole.AddPermission(createVenuePermission);
+                adminRole.AddPermission(listEventsPermission);
                 await appContext.Roles.AddAsync(adminRole);
 
                 Role providerRole = new Role("Provider", "Provider role with permissions to create offerings and venues");
                 providerRole.AddPermission(createOfferingPermission);
                 providerRole.AddPermission(createVenuePermission);
+                providerRole.AddPermission(listEventsPermission);
                 await appContext.Roles.AddAsync(providerRole);
 
                 Role artistRole = new Role("Artist", "Artist role with permission to create events");
                 artistRole.AddPermission(createEventPermission);
+                artistRole.AddPermission(listEventsPermission);
                 await appContext.Roles.AddAsync(artistRole);
+
+                Role consumerRole = new Role("Consumer", "Consumer role with permission to list events");
+                consumerRole.AddPermission(listEventsPermission);
+                await appContext.Roles.AddAsync(consumerRole);
+
+                IConfiguration configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+                string? userName = configuration["ADMIN_USER_NAME"];
+                string? userPassword = configuration["ADMIN_USER_PASSWORD"];
+                if(!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(userPassword))
+                {
+                    UserCreedentials adminCredentials = new UserCreedentials(userName, userPassword);
+                    ICreedentialsManager<UserCreedentials> credentialsManager = scope.ServiceProvider.GetRequiredService<ICreedentialsManager<UserCreedentials>>();
+                    string hashedPassword = credentialsManager.HashPassword(adminCredentials, adminCredentials.Password);
+                    User adminUser = new User("admin",adminCredentials.Email,hashedPassword);
+                    adminUser.AddRole(adminRole);
+                    await appContext.Users.AddAsync(adminUser);
+                }
 
                 await appContext.SaveChangesAsync();
                 await transaction.CommitAsync();

@@ -9,4 +9,9 @@ namespace culturalEvents.Modules.UserManagement.Common
     : Exception($"A user with the email '{email}' already exists.")
     {
     }
+
+    public class RoleNotFoundException(string roleName)
+    : Exception($"Role with name '{roleName}' was not found.")
+    {
+    }
 }
