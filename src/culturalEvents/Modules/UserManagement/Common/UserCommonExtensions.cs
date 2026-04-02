@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using culturalEvents.Modules.UserManagement.CreateUser;
+using culturalEvents.Modules.UserManagement.Login;
 
 namespace culturalEvents.Modules.UserManagement.Common
 {
@@ -19,7 +20,8 @@ namespace culturalEvents.Modules.UserManagement.Common
         public static WebApplicationBuilder RegisterUserManagementFeatures(this WebApplicationBuilder builder)
         {
             builder.RegisterCreateUserFeature()
-                   .RegisterUserCreedentialsManager();
+                   .RegisterUserCreedentialsManager()
+                   .RegisterLoginFeature();
             return builder;
         }
     }
