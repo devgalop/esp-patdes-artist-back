@@ -104,16 +104,14 @@ src/
 ├── Shared/
 │   ├── Domain/
 │   │   └── Result.cs
-│   │
-│   ├── Infrastructure/
-│   │   ├── Database/
-│   │   └── Messaging/
-│   │
 │   └── Abstractions/
 │       ├── ICommand.cs
 │       ├── IQuery.cs
 │       └── IEvent.cs
 │
+├── Infrastructure/
+│   ├── Database/
+│   └── Messaging/
 └── Tests/
     ├── EventManagementTests/
     ├── VenueManagementTests/
