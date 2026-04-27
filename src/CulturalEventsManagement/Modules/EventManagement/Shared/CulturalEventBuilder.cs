@@ -133,8 +133,8 @@ public static class CulturalEventBuilderExtensions
     /// <returns>El constructor de la aplicación web actualizado.</returns>
     public static WebApplicationBuilder AddCulturalEventBuilder(this WebApplicationBuilder builder)
     {
-        builder.Services.AddSingleton<ICulturalEventBuilder, CulturalEventBuilder>();
-        builder.Services.AddSingleton<CulturalEventBuilderDirector>();
+        builder.Services.AddScoped<ICulturalEventBuilder, CulturalEventBuilder>();
+        builder.Services.AddScoped<CulturalEventBuilderDirector>();
         return builder;
     }
 }

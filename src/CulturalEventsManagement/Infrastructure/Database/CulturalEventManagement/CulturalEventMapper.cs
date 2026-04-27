@@ -4,7 +4,7 @@ using CulturalEventsManagement.Shared.Domain;
 
 namespace CulturalEventsManagement.Infrastructure.Database.CulturalEventManagement;
 
-public class CulturalEventMapper(ICulturalEventBuilder builder)
+public class CulturalEventMapper
 {
     public CulturalEventEntity ToEntity(CulturalEvent culturalEvent)
     {
@@ -25,6 +25,7 @@ public class CulturalEventMapper(ICulturalEventBuilder builder)
 
     public CulturalEvent ToDomain(CulturalEventEntity entity)
     {
+        ICulturalEventBuilder builder = new CulturalEventBuilder();
         return builder.WithId(entity.Id)
                       .WithName(entity.Name)
                       .WithDescription(entity.Description)
@@ -46,7 +47,7 @@ public static class CulturalEventMapperExtensions
     /// <returns>El constructor de la aplicación web actualizado.</returns>
     public static WebApplicationBuilder AddCulturalEventMapper(this WebApplicationBuilder builder)
     {
-        builder.Services.AddSingleton<CulturalEventMapper>();
+        builder.Services.AddScoped<CulturalEventMapper>();
         return builder;
     }
 }

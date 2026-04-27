@@ -9,8 +9,17 @@ public class ReadEventsHandler(
 {
     public async Task<ReadEventsResponse> HandleAsync(ReadEventsRequest query)
     {
+        var events = await repository.GetAll();
         return new ReadEventsResponse(
-            await repository.GetAll()
+            events.Select(e => new CulturalEventSummary(
+                e.Id,
+                e.Name,
+                e.Description,
+                e.ScheduledAt,
+                e.Type.ToString(),
+                e.Status.ToString(),
+                e.BillingType.ToString()
+            ))
         );
     }
 }

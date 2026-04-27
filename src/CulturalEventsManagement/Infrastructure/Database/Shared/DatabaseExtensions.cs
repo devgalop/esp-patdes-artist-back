@@ -24,6 +24,7 @@ public static class DatabaseExtensions
     {
         using var scope = app.Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDatabaseContext>();
+        dbContext.Database.EnsureDeleted();
         dbContext.Database.Migrate();
         return app;
     }

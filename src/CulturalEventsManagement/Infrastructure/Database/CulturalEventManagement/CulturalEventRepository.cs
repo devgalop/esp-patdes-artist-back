@@ -29,17 +29,16 @@ public class CulturalEventRepository(
     {
         var entity = mapper.ToEntity(culturalEvent);
         var existingEntity = await dbContext.CulturalEvents
-                                            .FirstOrDefaultAsync(e => e.Id == entity.Id);
-
+                                            .Where(e => e.Id == entity.Id)
+                                            .FirstOrDefaultAsync();
         if (existingEntity == null)
         {
-            await dbContext.CulturalEvents.AddAsync(entity);
+            dbContext.Add(entity);
         }
         else
         {
             dbContext.Update(entity);
         }
-
         await dbContext.SaveChangesAsync();
     }
 }
