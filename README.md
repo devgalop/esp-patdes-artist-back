@@ -128,3 +128,7 @@ src/
 ## Guía de configuración
 
 En el archivo [SETUP.md](./docs/SETUP.md) se encuentra la guía de configuración para el proyecto, incluyendo la instalación de las herramientas necesarias y la configuración de la base de datos PostgreSQL utilizando Docker.
+
+## Aplicación de patrones de diseño
+
+Para conocer los patrones de diseño aplicados en el proyecto, puedes consultar el archivo [PATTERNS.md](./docs/PATTERNS.md), donde se describen los patrones utilizados, las razones para su elección y cómo se han implementado en el código.
