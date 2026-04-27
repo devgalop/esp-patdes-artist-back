@@ -1,6 +1,7 @@
 using CulturalEventsManagement.Modules.EventManagement.CreateEvent;
 using CulturalEventsManagement.Modules.EventManagement.ReadEventById;
 using CulturalEventsManagement.Modules.EventManagement.ReadEvents;
+using CulturalEventsManagement.Modules.EventManagement.RescheduledEvent;
 
 namespace CulturalEventsManagement.Modules.EventManagement.Shared;
 
@@ -11,7 +12,8 @@ public static class CulturalEventExtensions
         builder.AddCulturalEventBuilder()
                 .AddCreateEventHandler()
                 .AddReadEventsHandler()
-                .AddReadEventByIdHandler();
+                .AddReadEventByIdHandler()
+                .AddRescheduledEventHandler();
                 
         return builder;
     }

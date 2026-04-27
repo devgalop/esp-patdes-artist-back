@@ -37,7 +37,7 @@ public class CulturalEventRepository(
         }
         else
         {
-            dbContext.Update(entity);
+            dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
         }
         await dbContext.SaveChangesAsync();
     }
