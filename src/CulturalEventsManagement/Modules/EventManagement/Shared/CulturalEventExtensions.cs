@@ -1,4 +1,5 @@
 using CulturalEventsManagement.Modules.EventManagement.CreateEvent;
+using CulturalEventsManagement.Modules.EventManagement.ReadEventById;
 using CulturalEventsManagement.Modules.EventManagement.ReadEvents;
 
 namespace CulturalEventsManagement.Modules.EventManagement.Shared;
@@ -9,7 +10,8 @@ public static class CulturalEventExtensions
     {
         builder.AddCulturalEventBuilder()
                 .AddCreateEventHandler()
-                .AddReadEventsHandler();
+                .AddReadEventsHandler()
+                .AddReadEventByIdHandler();
                 
         return builder;
     }
