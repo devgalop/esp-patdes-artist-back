@@ -8,6 +8,8 @@
 - [Tecnologías utilizadas](#tecnologías-utilizadas)
 - [Estructura del proyecto](#estructura-del-proyecto)
 - [Diagrama de contexto](#diagrama-de-contexto)
+- [Guía de configuración](#guía-de-configuración)
+- [Aplicación de patrones de diseño](#aplicación-de-patrones-de-diseño)
 
 ## Descripción del reto
 
