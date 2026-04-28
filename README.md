@@ -37,8 +37,7 @@ Se aplicará la arquitectura de capas verticales (Vertical Slice Architecture), 
 
 - **.NET 10**
 - **Entity Framework**
-- **PostgreSQL**
-- **Docker**
+- **SQLLite**
 - **RabbitMQ**
 - **OpenAPI**
 
