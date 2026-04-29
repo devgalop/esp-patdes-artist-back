@@ -25,22 +25,21 @@ var app = builder.Build();
 
 app.MapEndpoints();
 
-if (app.Environment.IsDevelopment())
+app.MapOpenApi();
+
+app.MapScalarApiReference("/docs", options =>
 {
-    app.MapOpenApi();
-    app.MapScalarApiReference("/docs",options =>
-    {
-        options.Title = "API Gestión de Eventos Culturales";
-        options.WithOpenApiRoutePattern("/openapi/v1.json");
-        options.WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
-        options.DarkMode = true;
-    });
-    app.MapGet("/", () => Results.Redirect("/docs"));
-    app.UseDatabaseMigrations();
-}
+    options.Title = "API Gestión de Eventos Culturales";
+    options.WithOpenApiRoutePattern("/openapi/v1.json");
+    options.WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+    options.DarkMode = true;
+});
+
+app.MapGet("/", () => Results.Redirect("/docs"));
+
+app.UseDatabaseMigrations();
 
 app.UseHttpsRedirection();
-app.EnsureDatabaseCreated();
 
 await app.RunAsync();
 
