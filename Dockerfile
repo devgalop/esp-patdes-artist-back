@@ -1,10 +1,10 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
-WORKDIR /src
+WORKDIR /app
 
-COPY . .
-
-WORKDIR /src/CulturalEventsManagement
+COPY src/CulturalEventsManagement/CulturalEventsManagement.csproj ./
 RUN dotnet restore
+
+COPY src/CulturalEventsManagement/ ./
 RUN dotnet publish -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
