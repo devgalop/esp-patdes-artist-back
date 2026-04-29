@@ -3,7 +3,7 @@ WORKDIR /src
 
 COPY . .
 
-WORKDIR /src/src/CulturalEventsManagement
+WORKDIR /src/CulturalEventsManagement
 RUN dotnet restore
 RUN dotnet publish -c Release -o /app/publish
 
@@ -13,7 +13,6 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 EXPOSE 8080
-
 ENV ASPNETCORE_URLS=http://+:8080
 
 ENTRYPOINT ["dotnet", "CulturalEventsManagement.dll"]
