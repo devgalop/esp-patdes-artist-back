@@ -1,6 +1,9 @@
 using CulturalEventsManagement.Infrastructure.Database.Shared;
 using CulturalEventsManagement.Middlewares;
 using CulturalEventsManagement.Modules.EventManagement.Shared;
+using CulturalEventsManagement.Modules.Marketplace.Shared;
+using CulturalEventsManagement.Modules.NotificationManagement;
+using CulturalEventsManagement.Modules.NotificationManagement.SendNotification;
 using CulturalEventsManagement.Shared.Abstractions;
 using FluentValidation;
 using Scalar.AspNetCore;
@@ -14,8 +17,11 @@ builder.Configuration
 builder.AddEndpoints()
         .AddMediator()
         .AddCulturalEventModule()
+        .AddMarketplaceModule()
         .AddExceptionHandlers()
-        .AddDatabaseDependencies();
+        .AddDatabaseDependencies()
+        .AddNotificationOrchestrator()
+        .AddEmailNotificationService();
 
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly, includeInternalTypes: true);
 
@@ -35,7 +41,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.UseDatabaseMigrations(); // 👈 PRIMERO (CLAVE)
+app.UseDatabaseMigrations();
 
 app.UseCors("AllowAll");
 
