@@ -6,6 +6,7 @@ public class HiperSoundCatalogAdapter(
     HiperSoundCatalogService service
 ) : IProviderCatalogService
 {
+    public string GetProviderId() => "HiperSound";
     public async Task<Modules.Marketplace.GetProviderCatalog.Shared.CatalogResponse> GetProductCatalogAsync()
     {
         var soundCatalog = await service.GetProductsAsync();
@@ -29,7 +30,7 @@ public static class HiperSoundExtensions
     public static WebApplicationBuilder AddHiperSoundProvider(this WebApplicationBuilder builder)
     {
         builder.Services.AddSingleton<HiperSoundCatalogService>();
-        builder.Services.AddKeyedSingleton<IProviderCatalogService, HiperSoundCatalogAdapter>("HiperSound");
+        builder.Services.AddSingleton<IProviderCatalogService, HiperSoundCatalogAdapter>();
 
         return builder;
     }

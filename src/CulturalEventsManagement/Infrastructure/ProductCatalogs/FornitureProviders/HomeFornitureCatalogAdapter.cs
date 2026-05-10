@@ -6,6 +6,7 @@ public class HomeFornitureCatalogAdapter(
     HomeFornitureCatalogService service
 ) : IProviderCatalogService
 {
+    public string GetProviderId() => "HomeForniture";
     public async Task<CatalogResponse> GetProductCatalogAsync()
     {
         var catalogs = await service.GetCatalogAsync();
@@ -29,7 +30,7 @@ public static class HomeFornitureExtensions
     public static WebApplicationBuilder AddHomeFornitureProvider(this WebApplicationBuilder builder)
     {
         builder.Services.AddSingleton<HomeFornitureCatalogService>();
-        builder.Services.AddKeyedSingleton<IProviderCatalogService, HomeFornitureCatalogAdapter>("HomeForniture");
+        builder.Services.AddSingleton<IProviderCatalogService, HomeFornitureCatalogAdapter>();
 
         return builder;
     }

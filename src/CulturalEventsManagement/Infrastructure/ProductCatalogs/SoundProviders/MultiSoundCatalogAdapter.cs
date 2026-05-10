@@ -6,6 +6,7 @@ public class MultiSoundCatalogAdapter(
     MultiSoundCatalogService service
 ) : IProviderCatalogService
 {
+    public string GetProviderId() => "MultiSound";
     public async Task<Modules.Marketplace.GetProviderCatalog.Shared.CatalogResponse> GetProductCatalogAsync()
     {
         var soundCatalog = await service.GetCatalogAsync();
@@ -29,7 +30,7 @@ public static class MultiSoundExtensions
     public static WebApplicationBuilder AddMultiSoundProvider(this WebApplicationBuilder builder)
     {
         builder.Services.AddSingleton<MultiSoundCatalogService>();
-        builder.Services.AddKeyedSingleton<IProviderCatalogService, MultiSoundCatalogAdapter>("MultiSound");
+        builder.Services.AddSingleton<IProviderCatalogService, MultiSoundCatalogAdapter>();
 
         return builder;
     }

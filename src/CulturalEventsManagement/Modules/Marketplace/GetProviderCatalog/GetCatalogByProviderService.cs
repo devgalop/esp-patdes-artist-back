@@ -2,24 +2,19 @@
 namespace CulturalEventsManagement.Modules.Marketplace.GetProviderCatalog.Shared;
 
 public sealed class GetCatalogByProviderService(
-    IServiceProvider serviceProvider
+    IEnumerable<IProviderCatalogService> providerCatalogServices
 ): ICatalogService
 {
+    private readonly Dictionary<string, IProviderCatalogService> serviceProvider = 
+    providerCatalogServices.ToDictionary(s => s.GetProviderId(), s => s);
+
     public async Task<CatalogResponse> GetCatalogByProviderAsync(string providerId)
     {
-        return providerId switch
+        if(!serviceProvider.TryGetValue(providerId, out var serviceSelected))
         {
-            "HomeForniture" => await serviceProvider
-                                        .GetRequiredKeyedService<IProviderCatalogService>("HomeForniture")
-                                        .GetProductCatalogAsync(),
-            "HiperSound" => await serviceProvider
-                                        .GetRequiredKeyedService<IProviderCatalogService>("HiperSound")
-                                        .GetProductCatalogAsync(),
-            "MultiSound" => await serviceProvider
-                                        .GetRequiredKeyedService<IProviderCatalogService>("MultiSound")
-                                        .GetProductCatalogAsync(),
-            _ => throw new ArgumentException($"Provider with id '{providerId}' not found.")
-        };
+            throw new ArgumentException($"Provider with id '{providerId}' not found.");
+        }
+        return await serviceSelected.GetProductCatalogAsync();
     }
 }
 

@@ -14,5 +14,6 @@ public sealed record CatalogItem(
 
 public interface IProviderCatalogService
 {
+    string GetProviderId();
     Task<CatalogResponse> GetProductCatalogAsync();
 }
