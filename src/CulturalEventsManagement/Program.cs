@@ -21,26 +21,39 @@ builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly, includeInte
 
 builder.Services.AddOpenApi();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy =>
+        {
+            policy
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
+
 var app = builder.Build();
+
+app.UseDatabaseMigrations(); // 👈 PRIMERO (CLAVE)
+
+app.UseCors("AllowAll");
 
 app.MapEndpoints();
 
-if (app.Environment.IsDevelopment())
+app.MapOpenApi();
+
+app.MapScalarApiReference("/docs", options =>
 {
-    app.MapOpenApi();
-    app.MapScalarApiReference("/docs",options =>
-    {
-        options.Title = "API Gestión de Eventos Culturales";
-        options.WithOpenApiRoutePattern("/openapi/v1.json");
-        options.WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
-        options.DarkMode = true;
-    });
-    app.MapGet("/", () => Results.Redirect("/docs"));
-    app.UseDatabaseMigrations();
-}
+    options.Title = "API Gestión de Eventos Culturales";
+    options.WithOpenApiRoutePattern("/openapi/v1.json");
+    options.WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+    options.DarkMode = true;
+});
+
+app.MapGet("/", () => Results.Redirect("/docs"));
 
 app.UseHttpsRedirection();
-app.EnsureDatabaseCreated();
 
 await app.RunAsync();
 
