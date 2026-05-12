@@ -10,6 +10,7 @@ public static class MarketplaceExtensions
     {
         builder.AddProductCatalogs()
                 .AddGetCatalogByProviderService()
+                .AddGetCatalogByProviderCache()
                 .AddGetProviderCatalogHandler();
 
         return builder;

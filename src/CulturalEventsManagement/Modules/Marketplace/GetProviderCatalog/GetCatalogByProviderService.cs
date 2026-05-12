@@ -22,7 +22,7 @@ public static class GetCatalogByProviderExtensions
 {
     public static WebApplicationBuilder AddGetCatalogByProviderService(this WebApplicationBuilder builder)
     {
-        builder.Services.AddSingleton<ICatalogService, GetCatalogByProviderService>();
+        builder.Services.AddSingleton<GetCatalogByProviderService>();
 
         return builder;
     }
