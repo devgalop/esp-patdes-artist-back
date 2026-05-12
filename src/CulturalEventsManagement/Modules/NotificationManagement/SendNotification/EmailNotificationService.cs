@@ -11,8 +11,7 @@ public sealed class EmailNotificationService : INotificationService
 {
     public async Task SendAsync(BaseNotificationRequest request)
     {
-        EmailNotificationRequest req = (EmailNotificationRequest)request;
-        Console.WriteLine($"Sending email notification to {req.Recipient} with title '{req.Title}' and message: {req.Message}");
+        Console.WriteLine($"Sending email notification to {request.Recipient} with message: {request.Message}");
         await Task.Delay(500); // Simulate email sending delay
         Console.WriteLine("Email notification sent successfully.");
     }

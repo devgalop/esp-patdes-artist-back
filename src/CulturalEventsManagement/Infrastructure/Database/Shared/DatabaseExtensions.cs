@@ -1,4 +1,5 @@
 using CulturalEventsManagement.Infrastructure.Database.CulturalEventManagement;
+using CulturalEventsManagement.Infrastructure.Database.OrderManagement;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -13,9 +14,11 @@ public static class DatabaseExtensions
 
         //Agrega mappers
         builder.AddCulturalEventMapper();
+        builder.AddOrderMapper();
 
         //Agrega repositorios
         builder.AddCulturalEventRepository();
+        builder.AddOrderRepository();
         
         return builder;
     }

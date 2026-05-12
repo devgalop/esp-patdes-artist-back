@@ -9,5 +9,6 @@ public class WhatsappNotificationServiceWrapper(
         Console.WriteLine($"Sending WhatsApp notification to recipient {request.Recipient} with message: {request.Message}");
         await Task.Delay(400); // Simulate WhatsApp sending delay
         Console.WriteLine("WhatsApp notification sent successfully.");
+        await base.SendAsync(request);
     }
 }

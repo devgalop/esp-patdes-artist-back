@@ -7,12 +7,13 @@ public class GetProviderCatalogEnpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("/marketplace/catalog", async (
-            GetProviderCatalogRequest request, 
+        app.MapGet("/marketplace/catalog", async (
+            string providerId, 
             IMediator mediator,
             IValidator<GetProviderCatalogRequest> validator
         ) =>
         {
+            GetProviderCatalogRequest request = new(providerId);
             validator.ValidateAndThrow(request);
             var response = await mediator.SendAsync<GetProviderCatalogRequest, GetProviderCatalogResponse>(request);
             return Results.Ok(response);

@@ -9,6 +9,7 @@ public class SmsNotificationServiceWrapper(
         Console.WriteLine($"Sending SMS notification to recipient {request.Recipient} with message: {request.Message}");
         await Task.Delay(300); // Simulate SMS sending delay
         Console.WriteLine("SMS notification sent successfully.");
+        await base.SendAsync(request);
     }
 }
 

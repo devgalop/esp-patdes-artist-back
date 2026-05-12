@@ -4,7 +4,9 @@ using CulturalEventsManagement.Modules.EventManagement.Shared;
 using CulturalEventsManagement.Modules.Marketplace.Shared;
 using CulturalEventsManagement.Modules.NotificationManagement;
 using CulturalEventsManagement.Modules.NotificationManagement.SendNotification;
+using CulturalEventsManagement.Modules.OrderManagement.Shared;
 using CulturalEventsManagement.Shared.Abstractions;
+using CulturalEventsManagement.Shared.Services;
 using FluentValidation;
 using Scalar.AspNetCore;
 
@@ -21,7 +23,9 @@ builder.AddEndpoints()
         .AddExceptionHandlers()
         .AddDatabaseDependencies()
         .AddNotificationOrchestrator()
-        .AddEmailNotificationService();
+        .AddEmailNotificationService()
+        .AddOrderExtensions()
+        .AddOrderMediatorService();
 
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly, includeInternalTypes: true);
 
