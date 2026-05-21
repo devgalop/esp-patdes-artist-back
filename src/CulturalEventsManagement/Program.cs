@@ -4,6 +4,7 @@ using CulturalEventsManagement.Modules.EventManagement.Shared;
 using CulturalEventsManagement.Modules.Marketplace.Shared;
 using CulturalEventsManagement.Modules.NotificationManagement;
 using CulturalEventsManagement.Modules.NotificationManagement.SendNotification;
+using CulturalEventsManagement.Modules.OrderManagement.PayOrder;
 using CulturalEventsManagement.Modules.OrderManagement.Shared;
 using CulturalEventsManagement.Shared.Abstractions;
 using CulturalEventsManagement.Shared.Services;
@@ -25,7 +26,10 @@ builder.AddEndpoints()
         .AddNotificationOrchestrator()
         .AddEmailNotificationService()
         .AddOrderExtensions()
-        .AddOrderMediatorService();
+        .AddOrderMediatorService()
+        .AddPaymentGatewayFactory()
+        .AddPaymentService()
+        .AddPayOrderHandler();
 
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly, includeInternalTypes: true);
 

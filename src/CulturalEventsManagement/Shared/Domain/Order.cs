@@ -1,5 +1,13 @@
 namespace CulturalEventsManagement.Shared.Domain;
 
+public enum OrderStatus
+{
+    Pending,
+    Confirmed,
+    Cancelled,
+    Completed
+}
+
 public class Order(
     string userId,
     Guid eventId,
@@ -16,6 +24,12 @@ public class Order(
     public string CuponCode { get; private set; } = cuponCode;
     public string Observations { get; private set; } = observations;
     public List<OrderItemDetail> Details { get; private set; } = details;
+    public OrderStatus Status { get; private set; } = OrderStatus.Pending;
+
+    public void UpdateStatus(OrderStatus newStatus)
+    {
+        Status = newStatus;
+    }
 }
 
 public class OrderItemDetail(string productId, int quantity)
