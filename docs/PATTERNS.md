@@ -25,3 +25,9 @@ En esta sección se describen los patrones de diseño que se han aplicado en el 
 ## Patrones de diseño de comportamiento aplicados
 
 - **Mediator**: El patrón mediador se utilizó para orquestar el proceso de creación de una orden de pedido, desde la selección de eventos hasta el pago y la generación de la orden. El mediador actúa como un intermediario entre los diferentes componentes del sistema, facilitando la comunicación y coordinación entre ellos sin que tengan que referenciarse directamente. Esto mejora la modularidad del sistema y facilita la gestión de las dependencias entre los componentes.
+
+- **State**: El patrón State se aplicó para gestionar los estados internos que puede tener el pago de una orden de pedido, como "Pendiente", "Procesando", "Completado" o "Fallido". Este patrón permite que el comportamiento del sistema cambie dinámicamente según el estado actual del pago, lo que facilita la gestión de las transiciones entre estados y mejora la claridad del código.
+
+- **Strategy**: El patrón Strategy se utilizó para implementar diferentes estrategias de pago, como "Tarjeta de crédito", "PayPal" o "Transferencia bancaria". Este patrón permite que el sistema seleccione la estrategia de pago adecuada en tiempo de ejecución, lo que facilita la extensión del sistema para soportar nuevas formas de pago en el futuro sin modificar el código existente.
+
+![Behavioral](./diagrams/diag_behaviour_patterns.drawio.png)
